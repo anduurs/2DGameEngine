@@ -10,12 +10,12 @@ import com.dersgames.dersengine.components.TileLayer;
 import com.dersgames.dersengine.core.GameObject;
 import com.dersgames.dersengine.core.GameState;
 import com.dersgames.dersengine.core.GameStateManager;
-import com.dersgames.dersengine.core.Vector2f;
 import com.dersgames.dersengine.graphics.AnimationSequence;
 import com.dersgames.dersengine.graphics.ColorRGBA;
 import com.dersgames.dersengine.graphics.Display;
 import com.dersgames.dersengine.graphics.Sprite;
 import com.dersgames.dersengine.graphics.SpriteSheet;
+import com.dersgames.dersengine.input.KeyInput;
 import com.dersgames.dersengine.utils.AssetsManager;
 
 public class ExamplePlayState extends GameState{
@@ -69,9 +69,9 @@ public class ExamplePlayState extends GameState{
 	public void update(float dt) {
 		super.update(dt);
 		
-//		if(KeyInput.SPACE){
-//			gsm.push(new ExamplePauseState(gsm));
-//		}
+		if(KeyInput.SPACE){
+			gsm.push(new ExamplePauseState(gsm));
+		}
 	}
 	
 }
