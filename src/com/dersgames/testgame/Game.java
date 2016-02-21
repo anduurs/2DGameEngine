@@ -9,7 +9,7 @@ public class Game {
 	
 	public static void main(String[] args){
 		CoreEngine engine = new CoreEngine(new Display(1200, 675, "DersEngine v0.01"), 
-				new GameStateManager());
+				new GameStateManager(), false);
 		engine.pushStartingState(new ExamplePlayState(engine.getGameStateManager()));
 		engine.start();		
 	}

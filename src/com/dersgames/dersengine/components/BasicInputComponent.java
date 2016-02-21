@@ -4,7 +4,7 @@ import com.dersgames.dersengine.input.KeyInput;
 
 public class BasicInputComponent extends GameComponent{
 	
-	private float m_Speed = 1.0f;
+	private float m_Speed = 1f;
 
 	public BasicInputComponent(String tag) {
 		super(tag);

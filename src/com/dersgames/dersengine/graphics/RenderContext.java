@@ -2,6 +2,7 @@ package com.dersgames.dersengine.graphics;
 
 import com.dersgames.dersengine.components.Tile;
 import com.dersgames.dersengine.components.TileLayer;
+import com.dersgames.dersengine.utils.MathUtil;
 
 public class RenderContext{
 	
@@ -42,17 +43,17 @@ public class RenderContext{
 	}
 	
 	public void renderTile(Tile tile, int xPos, int yPos){
-		xPos = xPos << 4;
-		yPos = yPos << 4;
+		xPos = xPos << TileLayer.SHIFT_VALUE;
+		yPos = yPos << TileLayer.SHIFT_VALUE;
 		
 		xPos -= xOffset;
 		yPos -= yOffset;
 		
-		for(int y = 0; y < Tile.SIZE; y++){
+		for(int y = 0; y < TileLayer.TILE_SIZE; y++){
 			int yAbs = y + yPos;
-			for(int x = 0; x < Tile.SIZE; x++){
+			for(int x = 0; x < TileLayer.TILE_SIZE; x++){
 				int xAbs = x + xPos;
-				if(xAbs < -Tile.SIZE || xAbs >= m_Bitmap.getWidth() || yAbs < 0 || yAbs >= m_Bitmap.getHeight())
+				if(xAbs < -TileLayer.TILE_SIZE || xAbs >= m_Bitmap.getWidth() || yAbs < 0 || yAbs >= m_Bitmap.getHeight())
 					break;
 				if(xAbs < 0) xAbs = 0;
 				int col = tile.getSprite().getBitmap().getPixel(x, y);
@@ -65,10 +66,10 @@ public class RenderContext{
 		xOffset = (int)xScroll;
 		yOffset = (int)yScroll;
 		
-		int x0 = (int) xScroll >> 4;
-		int x1 = ((int)(xScroll + m_Bitmap.getWidth() + Tile.SIZE) >> 4);
-		int y0 = (int) yScroll >> 4;
-		int y1 = ((int)(yScroll + m_Bitmap.getHeight() + Tile.SIZE) >> 4);
+		int x0 = (int) xScroll >> TileLayer.SHIFT_VALUE;
+		int x1 = ((int)(xScroll + m_Bitmap.getWidth() + TileLayer.TILE_SIZE) >> TileLayer.SHIFT_VALUE);
+		int y0 = (int) yScroll >> TileLayer.SHIFT_VALUE;
+		int y1 = ((int)(yScroll + m_Bitmap.getHeight() + TileLayer.TILE_SIZE) >> TileLayer.SHIFT_VALUE);
 		
 		for(int y = y0; y < y1; y++)
 			for(int x = x0; x < x1; x++)

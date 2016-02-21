@@ -4,9 +4,7 @@ import com.dersgames.dersengine.graphics.RenderContext;
 import com.dersgames.dersengine.graphics.Sprite;
 
 public class Tile{
-	
-	public static final int SIZE = 16;
-	
+
 	private Sprite m_Sprite;
 
 	public Tile(Sprite sprite){
