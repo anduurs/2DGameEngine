@@ -103,7 +103,7 @@ public class CoreEngine implements Runnable{
 			}
 				
 			if(frameCounter >= 1){
-				System.out.println(ups + " ups , " + fps + " fps");
+//				System.out.println(ups + " ups , " + fps + " fps");
 				fps = 0;
 				ups = 0;
 				frameCounter = 0;

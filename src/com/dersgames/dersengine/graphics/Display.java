@@ -16,7 +16,7 @@ public class Display extends Canvas{
 	private static final long serialVersionUID = 1L;
 	
 	private static int m_Width, m_Height;
-	private final static int m_Scale = 3;
+	public final static int SCALE = 3;
 	
 	private BufferedImage m_DisplayImage;
 	private int[] m_PixelData;
@@ -51,10 +51,10 @@ public class Display extends Canvas{
 		
 		frame.setVisible(true);
 		
-		m_DisplayImage = new BufferedImage(width / m_Scale, height / m_Scale, BufferedImage.TYPE_INT_RGB);
+		m_DisplayImage = new BufferedImage(width / SCALE, height / SCALE, BufferedImage.TYPE_INT_RGB);
 		m_PixelData = ((DataBufferInt)m_DisplayImage.getRaster().getDataBuffer()).getData();
 		
-		m_FrameBuffer = new Bitmap(width / m_Scale, height / m_Scale);
+		m_FrameBuffer = new Bitmap(width / SCALE, height / SCALE);
 		m_KeyInput = new KeyInput();
 		
 		addKeyListener(m_KeyInput);
@@ -93,11 +93,11 @@ public class Display extends Canvas{
 	}
 	
 	public static int getDisplayWidth(){
-		return m_Width / m_Scale;
+		return m_Width / SCALE;
 	}
 	
 	public static int getDisplayHeight(){
-		return m_Height / m_Scale;
+		return m_Height / SCALE;
 	}
 	
 	public static void setTitle(String title){

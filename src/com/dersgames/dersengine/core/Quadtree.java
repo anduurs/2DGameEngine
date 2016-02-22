@@ -3,7 +3,7 @@ package com.dersgames.dersengine.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dersgames.dersengine.components.AABB;
+import com.dersgames.dersengine.components.BoundingBox;
 
 public class Quadtree {
 
@@ -11,13 +11,13 @@ public class Quadtree {
 	private int MAX_LEVELS = 5;
 
 	private int level;
-	private List<AABB> objects;
-	private AABB bounds;
+	private List<BoundingBox> objects;
+	private BoundingBox bounds;
 	private Quadtree[] nodes;
 
-	public Quadtree(int pLevel, AABB pBounds) {
+	public Quadtree(int pLevel, BoundingBox pBounds) {
 		level = pLevel;
-		objects = new ArrayList<AABB>();
+		objects = new ArrayList<BoundingBox>();
 		bounds = pBounds;
 		nodes = new Quadtree[4];
 	}
@@ -45,17 +45,17 @@ public class Quadtree {
 		int x = (int) bounds.x;
 		int y = (int) bounds.y;
 
-		nodes[0] = new Quadtree(level + 1, new AABB(x + subWidth, y, subWidth, subHeight));
-		nodes[1] = new Quadtree(level + 1, new AABB(x, y, subWidth, subHeight));
-		nodes[2] = new Quadtree(level + 1, new AABB(x, y + subHeight, subWidth, subHeight));
-		nodes[3] = new Quadtree(level + 1, new AABB(x + subWidth, y + subHeight, subWidth, subHeight));
+		nodes[0] = new Quadtree(level + 1, new BoundingBox(x + subWidth, y, subWidth, subHeight));
+		nodes[1] = new Quadtree(level + 1, new BoundingBox(x, y, subWidth, subHeight));
+		nodes[2] = new Quadtree(level + 1, new BoundingBox(x, y + subHeight, subWidth, subHeight));
+		nodes[3] = new Quadtree(level + 1, new BoundingBox(x + subWidth, y + subHeight, subWidth, subHeight));
 	}
 
 	/*
 	 * Determine which node the object belongs to. -1 means object cannot
 	 * completely fit within a child node and is part of the parent node
 	 */
-	private int getIndex(AABB pRect) {
+	private int getIndex(BoundingBox pRect) {
 		int index = -1;
 		double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
 		double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
@@ -90,7 +90,7 @@ public class Quadtree {
 	 * Insert the object into the quadtree. If the node exceeds the capacity, it
 	 * will split and add all objects to their corresponding nodes.
 	 */
-	public void insert(AABB pRect) {
+	public void insert(BoundingBox pRect) {
 		if (nodes[0] != null) {
 			int index = getIndex(pRect);
 
@@ -123,7 +123,7 @@ public class Quadtree {
 	/*
 	 * Return all objects that could collide with the given object
 	 */
-	public List<AABB> retrieve(List<AABB> returnObjects, AABB pRect) {
+	public List<BoundingBox> retrieve(List<BoundingBox> returnObjects, BoundingBox pRect) {
 		int index = getIndex(pRect);
 		if (index != -1 && nodes[0] != null) {
 			nodes[index].retrieve(returnObjects, pRect);

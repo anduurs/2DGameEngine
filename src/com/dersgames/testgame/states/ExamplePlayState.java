@@ -1,6 +1,6 @@
 package com.dersgames.testgame.states;
 
-import com.dersgames.dersengine.components.AABB;
+import com.dersgames.dersengine.components.BoundingBox;
 import com.dersgames.dersengine.components.AnimationComponent;
 import com.dersgames.dersengine.components.BasicInputComponent;
 import com.dersgames.dersengine.components.Camera2D;
@@ -24,7 +24,7 @@ import com.dersgames.testgame.components.WeaponComponent;
 
 public class ExamplePlayState extends GameState{
 	
-	private CollisionManager cm;
+	private CollisionManager m_CollisionManager;
 	private int timer = 0;
 
 	public ExamplePlayState(GameStateManager gsm) {
@@ -52,10 +52,10 @@ public class ExamplePlayState extends GameState{
 		tileLayer.attachComponent(tl);
 		
 		GameObject player = new GameObject("Player", tl.getPlayerStart(ColorRGBA.GRAY));
+		m_CollisionManager = new CollisionManager(player);
 		player.attachComponent(new BasicInputComponent("PlayerInput"));
 		AnimationComponent anim = new AnimationComponent("PlayerAnimation", playerSpriteSheet, CoordinateSpace.WORLD_SPACE);
-		player.attachComponent(new AABB("PlayerBox", (int)player.getX(), (int)player.getY(), 32, 32));
-		cm = new CollisionManager(player);
+		player.attachComponent(new BoundingBox("PlayerBox", (int)player.getX(), (int)player.getY(), 32, 32));
 		
 		GameObject playerWeapon = new GameObject("PlayerWeapon");
 		playerWeapon.attachComponent(new StaticSprite("WeaponSprite", 6, 6, ColorRGBA.RED, CoordinateSpace.WORLD_SPACE));
@@ -81,7 +81,7 @@ public class ExamplePlayState extends GameState{
 			enemy.attachComponent(new StaticSprite("EnemySprite", playerSpriteSheet, 
 					2, 1, 32, 32, CoordinateSpace.WORLD_SPACE));
 			
-			AABB enemyBox = new AABB("EnemyBox", (int)enemy.getX(), (int)enemy.getY(), 32, 32);
+			BoundingBox enemyBox = new BoundingBox("EnemyBox", (int)enemy.getX(), (int)enemy.getY(), 32, 32);
 			enemy.attachComponent(enemyBox);
 			CollisionManager.addCollisionBox(enemyBox);
 			
@@ -92,15 +92,10 @@ public class ExamplePlayState extends GameState{
 			sceneGraph.addChild(enemy);
 		}
 		
-		
-//		enemy.attachComponent(new BasicMovement("BasicMove"));
-		
 		GameObject camera = new GameObject("MainCamera");
 		Camera2D cam = new Camera2D("Camera2D", player, Display.getDisplayWidth(), Display.getDisplayHeight());
 		camera.attachComponent(cam);
 		cam.init();
-		
-		
 		
 		sceneGraph.addChild(player);
 		sceneGraph.addChild(camera);
@@ -112,7 +107,7 @@ public class ExamplePlayState extends GameState{
 		else timer = 0;
 		
 		super.update(dt);
-		cm.update(dt);
+		m_CollisionManager.update(dt);
 	}
 	
 }
