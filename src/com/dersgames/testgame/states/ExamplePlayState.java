@@ -7,6 +7,7 @@ import com.dersgames.dersengine.components.RenderableComponent.CoordinateSpace;
 import com.dersgames.dersengine.components.StaticSprite;
 import com.dersgames.dersengine.components.Tile;
 import com.dersgames.dersengine.components.TileLayer;
+import com.dersgames.dersengine.core.CollisionManager;
 import com.dersgames.dersengine.core.GameObject;
 import com.dersgames.dersengine.core.GameState;
 import com.dersgames.dersengine.core.GameStateManager;
@@ -16,9 +17,12 @@ import com.dersgames.dersengine.graphics.Display;
 import com.dersgames.dersengine.graphics.Sprite;
 import com.dersgames.dersengine.graphics.SpriteSheet;
 import com.dersgames.dersengine.input.KeyInput;
+import com.dersgames.dersengine.physics.AABB;
 import com.dersgames.dersengine.utils.AssetsManager;
 
 public class ExamplePlayState extends GameState{
+	
+	private CollisionManager cm;
 	
 	public ExamplePlayState(GameStateManager gsm) {
 		super(gsm);
@@ -39,6 +43,8 @@ public class ExamplePlayState extends GameState{
 		GameObject player = new GameObject("Player", tl.getPlayerStart(ColorRGBA.GRAY));
 		player.attachComponent(new BasicInputComponent("PlayerInput"));
 		AnimationComponent anim = new AnimationComponent("PlayerAnimation", sheet, CoordinateSpace.WORLD_SPACE);
+		player.attachComponent(new AABB("PlayerBox", player.getX(), player.getY(), 32, 32));
+		cm = new CollisionManager(player);
 		
 		int animSpeed = 10;
 	
@@ -52,6 +58,9 @@ public class ExamplePlayState extends GameState{
 		GameObject enemy = new GameObject("Enemy", 300, 200);
 		enemy.attachComponent(new StaticSprite("EnemySprite", sheet, 
 				2, 1, 32, 32, CoordinateSpace.WORLD_SPACE));
+		AABB enemyBox = new AABB("EnemyBox", enemy.getX(), enemy.getY(), 32, 32);
+		enemy.attachComponent(enemyBox);
+		CollisionManager.addCollisionBox(enemyBox);
 //		enemy.attachComponent(new BasicMovement("BasicMove"));
 		
 		GameObject camera = new GameObject("MainCamera");
@@ -68,7 +77,7 @@ public class ExamplePlayState extends GameState{
 	@Override
 	public void update(float dt) {
 		super.update(dt);
-		
+		cm.update(dt);
 		if(KeyInput.SPACE){
 			gsm.push(new ExamplePauseState(gsm));
 		}

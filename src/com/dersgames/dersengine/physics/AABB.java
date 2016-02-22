@@ -1,11 +1,14 @@
 package com.dersgames.dersengine.physics;
 
-public class AABB {
+import com.dersgames.dersengine.components.GameComponent;
+
+public class AABB extends GameComponent{
 	
-	public int x, y;
+	public float x, y;
 	public int width, height;
 	
-	public AABB(int x, int y, int width, int height){
+	public AABB(String tag, float x, float y, int width, int height){
+		super(tag);
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -20,6 +23,12 @@ public class AABB {
 			return true;
 		}
 		  return false;
+	}
+
+	@Override
+	public void update(float dt) {
+		x = m_GameObject.getX();
+		y = m_GameObject.getY();
 	}
 
 }
