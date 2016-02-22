@@ -62,7 +62,7 @@ public class TileLayer extends RenderableComponent{
 		for(int y = 0; y < m_Bitmap.getHeight(); y++)
 			for(int x = 0; x < m_Bitmap.getWidth(); x++){
 				if(m_Bitmap.getPixel(x, y) == ColorRGBA.RED){
-					playerStart = new Vector2f(x*TILE_SIZE,y*TILE_SIZE);
+					playerStart = new Vector2f(x * TILE_SIZE, y * TILE_SIZE);
 					m_Bitmap.setPixel(x, y, spawnTileColorID);
 					break;
 				}
@@ -87,9 +87,9 @@ public class TileLayer extends RenderableComponent{
 	}
 
 	@Override
-	public void render(RenderContext renderer){
+	public void render(RenderContext renderContext){
 		GameObject go = SceneGraph.getRoot().findChildByTag("MainCamera");
-		renderer.renderLayer(go.getX(), go.getY(), this);
+		renderContext.renderLayer(go.getX(), go.getY(), this);
 	}
 	
 	public int getWidth(){

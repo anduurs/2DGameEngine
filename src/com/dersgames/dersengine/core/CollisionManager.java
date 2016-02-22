@@ -3,7 +3,7 @@ package com.dersgames.dersengine.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dersgames.dersengine.physics.AABB;
+import com.dersgames.dersengine.components.AABB;
 
 public class CollisionManager {
 	
@@ -21,8 +21,9 @@ public class CollisionManager {
 	public void update(float dt){
 		AABB pBox = (AABB)m_Player.findComponentByTag("PlayerBox");
 		for(AABB box : m_CollisionBoxes){
-			if(pBox.intersect(box))
-				System.out.println("COLLISION!");
+			if(pBox.intersect(box)){
+				box.getGameObject().destroy();
+			}
 		}
 	}
 

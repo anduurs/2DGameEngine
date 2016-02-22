@@ -11,7 +11,7 @@ import com.dersgames.dersengine.graphics.RenderContext;
 public class GameObject {
 	
 	private List<GameComponent> m_Components;
-	private List<RenderableComponent> m_RenderComponents;
+	private List<RenderableComponent> m_RenderableComponents;
 	private List<GameObject> m_Children;
 	
 	private String m_Tag;
@@ -38,7 +38,7 @@ public class GameObject {
 		
 		m_Children = new ArrayList<GameObject>();
 		m_Components = new ArrayList<GameComponent>();
-		m_RenderComponents = new ArrayList<RenderableComponent>();
+		m_RenderableComponents = new ArrayList<RenderableComponent>();
 		
 		m_Position = position;
 	}
@@ -48,29 +48,37 @@ public class GameObject {
 		
 		if(component instanceof RenderableComponent){
 			RenderableComponent rc = (RenderableComponent) component;
-			m_RenderComponents.add(rc);
+			getRenderableComponents().add(rc);
 		}
 		
-		m_Components.add(component);
+		getComponents().add(component);
 		
 		return component;
 	}
 	
 	public GameComponent findComponentByTag(String tag){
-		for(GameComponent c : m_Components)
+		for(GameComponent c : getComponents())
 			if(c.getTag().equals(tag))
 				return c;
 		return null;
 	}
 	
-	public GameObject attachChild(GameObject gameObject){
+	public GameObject addChild(GameObject gameObject){
 		gameObject.setParent(this);
-		m_Children.add(gameObject);
+		getChildren().add(gameObject);
+		return gameObject;
+	}
+	
+	public GameObject attachChild(GameObject gameObject, float xOffset, float yOffset){
+		gameObject.setParent(this);
+		gameObject.getPosition().x = m_Position.x + xOffset;
+		gameObject.getPosition().y = m_Position.y + yOffset;
+		getChildren().add(gameObject);
 		return gameObject;
 	}
 	
 	public GameObject findChildByTag(String tag){
-		for(GameObject go : m_Children){
+		for(GameObject go : getChildren()){
 			if(go.getTag().equals(tag))
 				return go;
 			else go.findChildByTag(tag);
@@ -80,31 +88,31 @@ public class GameObject {
 	}
 	
 	public void updateComponents(float dt){
-		for(GameComponent c : m_Components)
+		for(GameComponent c : getComponents())
 			if(c.isEnabled())
 				c.update(dt);
 	}
 	
 	public void updateAll(float dt){
 		updateComponents(dt);
-		for(GameObject go : m_Children)
+		for(GameObject go : getChildren())
 			go.updateAll(dt);
 	}
 	
 	public void renderComponents(RenderContext renderContext){
-		for(RenderableComponent rc : m_RenderComponents)
+		for(RenderableComponent rc : getRenderableComponents())
 			if(rc.isEnabled())
 				rc.render(renderContext);
 	}
 	
 	public void renderAll(RenderContext renderContext){
 		renderComponents(renderContext);
-		for(GameObject go : m_Children)
+		for(GameObject go : getChildren())
 			go.renderAll(renderContext);
 	}
 	
 	public void clearDeadGameObjects(){
-		Iterator<GameObject> i = m_Children.iterator();
+		Iterator<GameObject> i = getChildren().iterator();
 		while(i.hasNext()){
 			GameObject go = i.next();
 			if(!go.isAlive())
@@ -115,16 +123,41 @@ public class GameObject {
 	
 	public void destroy(){
 		m_Alive = false;
-		for(GameObject go : m_Children)
-			go.destroy();
 		
-		m_Children.clear();
-		m_Components.clear();
-		m_RenderComponents.clear();
+//		for(GameObject go : getChildren())
+//			go.destroy();
+//		
+//		getChildren().clear();
+//		getComponents().clear();
+//		getRenderableComponents().clear();
+//		
+//		if(m_Parent != null){
+//			m_Parent.removeChild(this);
+//		}
+	}
+	
+	public void removeChild(GameObject child){
+		getChildren().remove(child);
+	}
+	
+	private synchronized List<GameObject> getChildren(){
+		return m_Children;
+	}
+	
+	private synchronized List<GameComponent> getComponents(){
+		return m_Components;
+	}
+	
+	private synchronized List<RenderableComponent> getRenderableComponents(){
+		return m_RenderableComponents;
 	}
 
 	public String getTag() {
 		return m_Tag;
+	}
+	
+	public void setPosition(Vector2f position){
+		m_Position = position;
 	}
 
 	public Vector2f getPosition() {
@@ -146,6 +179,10 @@ public class GameObject {
 	public boolean isAlive(){
 		return m_Alive;
 	}
+	
+	public void setLive(boolean live){
+		m_Alive = live;
+	}
 
 	public void setParent(GameObject parent) {
 		m_Parent = parent;
@@ -154,7 +191,4 @@ public class GameObject {
 	public int numOfChildren(){
 		return m_Children.size();
 	}
-	
-	
-
 }

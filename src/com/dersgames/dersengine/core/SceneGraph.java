@@ -19,11 +19,10 @@ public class SceneGraph {
 	}
 	
 	public void addChild(GameObject gameObject){
-		m_Root.attachChild(gameObject);
+		m_Root.addChild(gameObject);
 	}
 	
 	public void destroy(){
-		m_Root.destroy();
 		m_Root = null;
 	}
 	

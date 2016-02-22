@@ -1,4 +1,4 @@
-package com.dersgames.dersengine.physics;
+package com.dersgames.dersengine.components;
 
 import com.dersgames.dersengine.components.GameComponent;
 

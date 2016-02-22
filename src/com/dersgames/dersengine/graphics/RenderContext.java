@@ -66,6 +66,7 @@ public class RenderContext{
 		xOffset = (int)xScroll;
 		yOffset = (int)yScroll;
 		
+		//defining the render region/clipping space
 		int x0 = (int) xScroll >> TileLayer.SHIFT_VALUE;
 		int x1 = ((int)(xScroll + m_Bitmap.getWidth() + TileLayer.TILE_SIZE) >> TileLayer.SHIFT_VALUE);
 		int y0 = (int) yScroll >> TileLayer.SHIFT_VALUE;
