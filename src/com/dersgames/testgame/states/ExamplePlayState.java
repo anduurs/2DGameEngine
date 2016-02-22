@@ -12,7 +12,6 @@ import com.dersgames.dersengine.core.CollisionManager;
 import com.dersgames.dersengine.core.GameObject;
 import com.dersgames.dersengine.core.GameState;
 import com.dersgames.dersengine.core.GameStateManager;
-import com.dersgames.dersengine.core.SceneGraph;
 import com.dersgames.dersengine.graphics.AnimationSequence;
 import com.dersgames.dersengine.graphics.ColorRGBA;
 import com.dersgames.dersengine.graphics.Display;
@@ -21,6 +20,7 @@ import com.dersgames.dersengine.graphics.SpriteSheet;
 import com.dersgames.dersengine.input.KeyInput;
 import com.dersgames.dersengine.utils.AssetsManager;
 import com.dersgames.dersengine.utils.Randomizer;
+import com.dersgames.testgame.components.WeaponComponent;
 
 public class ExamplePlayState extends GameState{
 	
@@ -54,8 +54,13 @@ public class ExamplePlayState extends GameState{
 		GameObject player = new GameObject("Player", tl.getPlayerStart(ColorRGBA.GRAY));
 		player.attachComponent(new BasicInputComponent("PlayerInput"));
 		AnimationComponent anim = new AnimationComponent("PlayerAnimation", playerSpriteSheet, CoordinateSpace.WORLD_SPACE);
-		player.attachComponent(new AABB("PlayerBox", player.getX(), player.getY(), 32, 32));
+		player.attachComponent(new AABB("PlayerBox", (int)player.getX(), (int)player.getY(), 32, 32));
 		cm = new CollisionManager(player);
+		
+		GameObject playerWeapon = new GameObject("PlayerWeapon");
+		playerWeapon.attachComponent(new StaticSprite("WeaponSprite", 6, 6, ColorRGBA.RED, CoordinateSpace.WORLD_SPACE));
+		playerWeapon.attachComponent(new WeaponComponent("Weapon"));
+		player.attachChild(playerWeapon, 7, 20);
 		
 		int animSpeed = 10;
 	
@@ -76,13 +81,13 @@ public class ExamplePlayState extends GameState{
 			enemy.attachComponent(new StaticSprite("EnemySprite", playerSpriteSheet, 
 					2, 1, 32, 32, CoordinateSpace.WORLD_SPACE));
 			
-			AABB enemyBox = new AABB("EnemyBox", enemy.getX(), enemy.getY(), 32, 32);
+			AABB enemyBox = new AABB("EnemyBox", (int)enemy.getX(), (int)enemy.getY(), 32, 32);
 			enemy.attachComponent(enemyBox);
 			CollisionManager.addCollisionBox(enemyBox);
 			
-			GameObject weapon = new GameObject("EnemyWeapon");
-			weapon.attachComponent(new StaticSprite("WeaponSprite", 10, 10, ColorRGBA.RED, CoordinateSpace.WORLD_SPACE));
-			enemy.attachChild(weapon, 2, 20);
+//			GameObject weapon = new GameObject("EnemyWeapon");
+//			weapon.attachComponent(new StaticSprite("WeaponSprite", 10, 10, ColorRGBA.RED, CoordinateSpace.WORLD_SPACE));
+//			enemy.attachChild(weapon, 2, 20);
 			
 			sceneGraph.addChild(enemy);
 		}
@@ -106,15 +111,8 @@ public class ExamplePlayState extends GameState{
 		if(timer < 7500) timer++;
 		else timer = 0;
 		
-		if(timer % 60 == 0){
-			
-		}
-		
 		super.update(dt);
 		cm.update(dt);
-		if(KeyInput.SPACE){
-			gsm.push(new ExamplePauseState(gsm));
-		}
 	}
 	
 }

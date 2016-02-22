@@ -4,10 +4,18 @@ import com.dersgames.dersengine.components.GameComponent;
 
 public class AABB extends GameComponent{
 	
-	public float x, y;
+	public int x, y;
 	public int width, height;
 	
-	public AABB(String tag, float x, float y, int width, int height){
+	public AABB(int x, int y, int width, int height){
+		super("BoundingBox");
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+	}
+	
+	public AABB(String tag, int x, int y, int width, int height){
 		super(tag);
 		this.x = x;
 		this.y = y;
@@ -27,8 +35,24 @@ public class AABB extends GameComponent{
 
 	@Override
 	public void update(float dt) {
-		x = m_GameObject.getX();
-		y = m_GameObject.getY();
+		x = (int)m_GameObject.getX();
+		y = (int)m_GameObject.getY();
+	}
+	
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 
 }

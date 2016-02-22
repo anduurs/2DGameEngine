@@ -19,6 +19,8 @@ public class GameObject {
 	private GameObject m_Parent;
 	private boolean m_Alive;
 	
+	private float xOffset, yOffset;
+	
 	public GameObject(){
 		this("GameObject");
 	}
@@ -71,6 +73,8 @@ public class GameObject {
 	
 	public GameObject attachChild(GameObject gameObject, float xOffset, float yOffset){
 		gameObject.setParent(this);
+		this.xOffset = xOffset;
+		this.yOffset = yOffset;
 		gameObject.getPosition().x = m_Position.x + xOffset;
 		gameObject.getPosition().y = m_Position.y + yOffset;
 		getChildren().add(gameObject);
@@ -190,5 +194,21 @@ public class GameObject {
 	
 	public int numOfChildren(){
 		return m_Children.size();
+	}
+
+	public float getxOffset() {
+		return xOffset;
+	}
+
+	public void setxOffset(float xOffset) {
+		this.xOffset = xOffset;
+	}
+
+	public float getyOffset() {
+		return yOffset;
+	}
+
+	public void setyOffset(float yOffset) {
+		this.yOffset = yOffset;
 	}
 }

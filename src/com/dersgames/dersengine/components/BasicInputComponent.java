@@ -18,24 +18,28 @@ public class BasicInputComponent extends GameComponent{
 			animation.setMoving(true);
 			animation.setCurrentSequence(animation.getSequence("North"));
 			m_GameObject.getPosition().y -= m_Speed;
+			m_GameObject.setxOffset(20);
 		}
 		
 		if(KeyInput.DOWN){
 			animation.setMoving(true);
 			animation.setCurrentSequence(animation.getSequence("South"));
 			m_GameObject.getPosition().y += m_Speed;
+			m_GameObject.setxOffset(7);
 		}
 		
 		if(KeyInput.RIGHT){
 			animation.setMoving(true);
 			animation.setCurrentSequence(animation.getSequence("East"));
 			m_GameObject.getPosition().x += m_Speed;
+			m_GameObject.setxOffset(20);
 		}
 		
 		if(KeyInput.LEFT){
 			animation.setMoving(true);
 			animation.setCurrentSequence(animation.getSequence("West"));
 			m_GameObject.getPosition().x -= m_Speed;
+			m_GameObject.setxOffset(7);
 		}
 		
 		if(KeyInput.UP && KeyInput.LEFT){
