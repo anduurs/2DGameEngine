@@ -76,6 +76,7 @@ public class Display extends Canvas{
 	}
 	
 	public void swapBuffers(){
+		m_FrameBuffer.applyAmbientLight(0.05f);
 		m_FrameBuffer.copyToIntArray(m_PixelData);
 		do{
 			try{
