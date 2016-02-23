@@ -6,9 +6,11 @@ import java.util.HashMap;
 import com.dersgames.dersengine.core.GameObject;
 import com.dersgames.dersengine.core.SceneGraph;
 import com.dersgames.dersengine.core.Vector2f;
+import com.dersgames.dersengine.graphics.AnimatedTile;
 import com.dersgames.dersengine.graphics.Bitmap;
 import com.dersgames.dersengine.graphics.ColorRGBA;
 import com.dersgames.dersengine.graphics.RenderContext;
+import com.dersgames.dersengine.graphics.Tile;
 import com.dersgames.dersengine.utils.AssetsManager;
 import com.dersgames.dersengine.utils.MathUtil;
 
@@ -79,17 +81,32 @@ public class TileLayer extends RenderableComponent{
 		if(x < 0 || x >= m_Width || y < 0 || y >= m_Height)
 			return null;
 		
-		for(Integer i : m_Tiles.keySet())
+		for(Integer i : getTiles().keySet())
 			if(m_Bitmap.getPixel(x, y) == i)
-				return m_Tiles.get(i);
+				return getTiles().get(i);
 		
 		return null;
+	}
+	
+	@Override
+	public void update(float dt){
+		for(Integer i : getTiles().keySet()){
+			Tile tile = getTiles().get(i);
+			if(tile instanceof AnimatedTile){
+				AnimatedTile aTile = (AnimatedTile) tile;
+				aTile.update(dt);
+			}
+		}
 	}
 
 	@Override
 	public void render(RenderContext renderContext){
 		GameObject go = SceneGraph.getRoot().findChildByTag("MainCamera");
 		renderContext.renderLayer(go.getX(), go.getY(), this);
+	}
+	
+	public synchronized HashMap<Integer, Tile> getTiles(){
+		return m_Tiles;
 	}
 	
 	public int getWidth(){

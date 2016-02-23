@@ -3,9 +3,9 @@ package com.dersgames.testgame.states;
 import com.dersgames.dersengine.core.GameState;
 import com.dersgames.dersengine.core.GameStateManager;
 
-public class ExampleStartMenuState extends GameState{
+public class StartMenuState extends GameState{
 
-	public ExampleStartMenuState(GameStateManager gsm) {
+	public StartMenuState(GameStateManager gsm) {
 		super(gsm);
 		
 	}

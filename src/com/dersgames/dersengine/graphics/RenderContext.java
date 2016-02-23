@@ -1,8 +1,6 @@
 package com.dersgames.dersengine.graphics;
 
-import com.dersgames.dersengine.components.Tile;
 import com.dersgames.dersengine.components.TileLayer;
-import com.dersgames.dersengine.utils.MathUtil;
 
 public class RenderContext{
 	

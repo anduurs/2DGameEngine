@@ -1,4 +1,4 @@
-package com.dersgames.testgame.components;
+package com.dersgames.testgame.components.player;
 
 import com.dersgames.dersengine.components.GameComponent;
 

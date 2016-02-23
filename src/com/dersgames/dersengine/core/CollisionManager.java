@@ -43,7 +43,6 @@ public class CollisionManager {
 			for(int j = 0; j < returnObjects.size(); j++){
 				BoundingBox box = returnObjects.get(j);
 				if(pBox.intersect(box)){
-					//HANDLE THE COLLISIONS HERE
 					box.getGameObject().destroy();
 				}
 			}

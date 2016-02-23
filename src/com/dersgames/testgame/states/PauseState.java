@@ -9,9 +9,9 @@ import com.dersgames.dersengine.core.SceneGraph;
 import com.dersgames.dersengine.graphics.ColorRGBA;
 import com.dersgames.dersengine.input.KeyInput;
 
-public class ExamplePauseState extends GameState{
+public class PauseState extends GameState{
 
-	public ExamplePauseState(GameStateManager gsm) {
+	public PauseState(GameStateManager gsm) {
 		super(gsm);
 	}
 

@@ -1,18 +1,21 @@
 package com.dersgames.dersengine.components;
 
-import com.dersgames.dersengine.components.GameComponent;
+import com.dersgames.dersengine.components.RenderableComponent.CoordinateSpace;
 import com.dersgames.dersengine.core.CollisionManager;
+import com.dersgames.dersengine.graphics.ColorRGBA;
 
 public class BoundingBox extends GameComponent{
 	
-	public int x, y;
+	public float x, y;
 	public int width, height;
+
+	private static int instanceCount;
 	
-	public BoundingBox(int x, int y, int width, int height){
+	public BoundingBox(float x, float y, int width, int height){
 		this("BoundingBox", x, y, width, height);
 	}
 	
-	public BoundingBox(String tag, int x, int y, int width, int height){
+	public BoundingBox(String tag, float x, float y, int width, int height){
 		super(tag);
 		this.x = x;
 		this.y = y;
@@ -20,11 +23,18 @@ public class BoundingBox extends GameComponent{
 		this.height = height;
 	}
 	
+	public void addCollisionSprite(){
+		StaticSprite m_StaticSprite = new StaticSprite("BoundingBoxSprite" + instanceCount++, width, height,
+				ColorRGBA.RED, CoordinateSpace.WORLD_SPACE);
+		
+		m_GameObject.attachComponent(m_StaticSprite);
+	}
+	
 	public boolean intersect(BoundingBox box){
-		  if(this.x < box.x + box.width && 
-			this.x + this.width > box.x && 
-			this.y < box.y + box.height && 
-			this.height + this.y > box.y){
+		  if(this.x <= box.x + box.width && 
+			this.x + this.width >= box.x && 
+			this.y <= box.y + box.height && 
+			this.height + this.y >= box.y){
 			return true;
 		}
 		  return false;
@@ -32,18 +42,18 @@ public class BoundingBox extends GameComponent{
 
 	@Override
 	public void update(float dt) {
-		if(!m_GameObject.isAlive()){
+		if(!m_GameObject.isAlive())
 			CollisionManager.removeCollisionBox(this);
-		}
-		x = (int)m_GameObject.getX();
-		y = (int)m_GameObject.getY();
+		
+		x = m_GameObject.getX();
+		y = m_GameObject.getY();
 	}
 	
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 
