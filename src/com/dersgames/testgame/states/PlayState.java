@@ -15,6 +15,7 @@ import com.dersgames.dersengine.graphics.AnimatedTile;
 import com.dersgames.dersengine.graphics.AnimationSequence;
 import com.dersgames.dersengine.graphics.ColorRGBA;
 import com.dersgames.dersengine.graphics.Display;
+import com.dersgames.dersengine.graphics.RenderContext;
 import com.dersgames.dersengine.graphics.Sprite;
 import com.dersgames.dersengine.graphics.SpriteSheet;
 import com.dersgames.dersengine.graphics.Tile;
@@ -25,7 +26,10 @@ import com.dersgames.testgame.components.player.WeaponComponent;
 public class PlayState extends GameState{
 	
 	private CollisionManager m_CollisionManager;
+	
 	private int timer = 0;
+	private float ambientFactor = 1.0f;
+	private boolean day = true, night = false;
 
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
@@ -62,7 +66,6 @@ public class PlayState extends GameState{
 		
 		player.attachComponent(new BasicInputComponent("PlayerInput"));
 		AnimationComponent anim = new AnimationComponent("PlayerAnimation", playerSpriteSheet, CoordinateSpace.WORLD_SPACE);
-		
 		
 		GameObject playerWeapon = new GameObject("PlayerWeapon");
 		playerWeapon.attachComponent(new StaticSprite("WeaponSprite", 6, 6, ColorRGBA.GREEN, CoordinateSpace.WORLD_SPACE));
@@ -110,8 +113,37 @@ public class PlayState extends GameState{
 		if(timer < 7500) timer++;
 		else timer = 0;
 		
+		if(ambientFactor <= 0.1f){
+			ambientFactor = 0.1f;
+			night = true;
+			day = false;
+		}
+		
+		if(ambientFactor >= 1f){
+			ambientFactor = 1f;
+			day = true;
+			night = false;
+		}
+		
+		if(day){
+			if(timer % 5*60 == 0){
+				ambientFactor -= 0.01f*dt;
+			}
+		}
+		
+		if(night){
+			if(timer % 5*60 == 0){
+				ambientFactor += 0.01f*dt;
+			}
+		}
+		
 		super.update(dt);
 		m_CollisionManager.update(dt);
+	}
+	
+	public void render(RenderContext renderContext) {
+		super.render(renderContext);
+		renderContext.applyAmbientLight(ambientFactor);
 	}
 	
 }

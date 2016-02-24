@@ -45,21 +45,25 @@ public class BasicInputComponent extends GameComponent{
 		if(KeyInput.UP && KeyInput.LEFT){
 			animation.setMoving(true);
 			animation.setCurrentSequence(animation.getSequence("North"));
+			m_GameObject.setxOffset(20);
 		}
 		
 		if(KeyInput.UP && KeyInput.RIGHT){
 			animation.setMoving(true);
 			animation.setCurrentSequence(animation.getSequence("North"));
+			m_GameObject.setxOffset(20);
 		}
 		
 		if(KeyInput.DOWN && KeyInput.LEFT){
 			animation.setMoving(true);
 			animation.setCurrentSequence(animation.getSequence("South"));
+			m_GameObject.setxOffset(7);
 		}
 		
 		if(KeyInput.DOWN && KeyInput.RIGHT){
 			animation.setMoving(true);
 			animation.setCurrentSequence(animation.getSequence("South"));
+			m_GameObject.setxOffset(7);
 		}
 		
 		if(!KeyInput.LEFT && !KeyInput.RIGHT && !KeyInput.DOWN && !KeyInput.UP){

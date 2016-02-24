@@ -27,6 +27,10 @@ public class RenderContext{
 		}
 	}
 	
+	public void applyAmbientLight(float ambientFactor){
+		m_Bitmap.applyAmbientLight(ambientFactor);
+	}
+	
 	public void renderRectangle(int xPos, int yPos, int width, int height, int col){
 		for(int y = 0; y < height; y++){
 			int yAbs = y + yPos;
