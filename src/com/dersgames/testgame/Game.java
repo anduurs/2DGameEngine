@@ -3,6 +3,7 @@ package com.dersgames.testgame;
 import com.dersgames.dersengine.core.CoreEngine;
 import com.dersgames.dersengine.core.GameStateManager;
 import com.dersgames.dersengine.graphics.Display;
+import com.dersgames.testgame.states.PauseState;
 import com.dersgames.testgame.states.PlayState;
 
 public class Game {
@@ -11,6 +12,7 @@ public class Game {
 		CoreEngine engine = new CoreEngine(new Display(1200, 675, "DersEngine v0.01"), 
 				new GameStateManager(), false);
 		engine.pushStartingState(new PlayState(engine.getGameStateManager()));
+//		engine.pushStartingState(new PauseState(engine.getGameStateManager()));
 		engine.start();		
 	}
 
