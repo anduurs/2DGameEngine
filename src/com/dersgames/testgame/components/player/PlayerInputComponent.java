@@ -1,12 +1,14 @@
-package com.dersgames.dersengine.components;
+package com.dersgames.testgame.components.player;
 
+import com.dersgames.dersengine.components.AnimationComponent;
+import com.dersgames.dersengine.components.GameComponent;
 import com.dersgames.dersengine.input.KeyInput;
 
-public class BasicInputComponent extends GameComponent{
+public class PlayerInputComponent extends GameComponent{
 	
 	private float m_Speed = 1f;
 
-	public BasicInputComponent(String tag) {
+	public PlayerInputComponent(String tag) {
 		super(tag);
 	}
 	

@@ -13,11 +13,8 @@ public class CollisionManager {
 			Display.getDisplayHeight() * Display.SCALE));
 	
 	private static List<BoundingBox> m_CollisionBoxes = new ArrayList<BoundingBox>();
-	private GameObject m_Player;
 
-	public CollisionManager(GameObject player){
-		m_Player = player;
-	}
+	public CollisionManager(){}
 	
 	public static void addCollisionBox(BoundingBox box){
 		getCollisionBoxes().add(box);
@@ -28,7 +25,6 @@ public class CollisionManager {
 	}
 	
 	public void update(float dt){
-		BoundingBox pBox = (BoundingBox)m_Player.findComponentByTag("PlayerBox");
 		getQuadtree().clear();
 		
 		for(int i = 0; i < getCollisionBoxes().size(); i++)
@@ -38,12 +34,20 @@ public class CollisionManager {
 		
 		for(int i = 0; i < getCollisionBoxes().size(); i++){
 			returnObjects.clear();
-			getQuadtree().retrieve(returnObjects, pBox);
+			BoundingBox box1 = getCollisionBoxes().get(i);
+			getQuadtree().retrieve(returnObjects, box1);
 			
 			for(int j = 0; j < returnObjects.size(); j++){
-				BoundingBox box = returnObjects.get(j);
-				if(pBox.intersect(box)){
-					box.getGameObject().destroy();
+				BoundingBox box2 = returnObjects.get(j);
+				if(box1.intersect(box2)){
+					if(box1.getGameObject() instanceof Collideable
+							&& box2.getGameObject() instanceof Collideable){
+						
+						Collideable obj1 = (Collideable)box1.getGameObject();
+						Collideable obj2 = (Collideable)box2.getGameObject();
+						
+						obj1.collisionWith(obj2);
+					}
 				}
 			}
 		}
