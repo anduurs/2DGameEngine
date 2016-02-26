@@ -126,15 +126,13 @@ public class PlayState extends GameState{
 		}
 		
 		if(day){
-			if(timer % 5*60 == 0){
+			if(timer % 5*60 == 0)
 				ambientFactor -= 0.01f*dt;
-			}
 		}
 		
 		if(night){
-			if(timer % 5*60 == 0){
+			if(timer % 5*60 == 0)
 				ambientFactor += 0.01f*dt;
-			}
 		}
 		
 		super.update(dt);
