@@ -12,29 +12,29 @@ public class CollisionManager {
 			Display.getDisplayWidth() * Display.SCALE, 
 			Display.getDisplayHeight() * Display.SCALE));
 	
-	private static List<BoundingBox> m_CollisionBoxes = new ArrayList<BoundingBox>();
+	private static List<Collideable> m_Collideables = new ArrayList<Collideable>();
 
 	public CollisionManager(){}
 	
-	public static void addCollisionBox(BoundingBox box){
-		getCollisionBoxes().add(box);
+	public static void addCollisionBox(Collideable obj){
+		getCollideables().add(obj);
 	}
 	
-	public static void removeCollisionBox(BoundingBox box){
-		getCollisionBoxes().remove(box);
+	public static void removeCollisionBox(Collideable obj){
+		getCollideables().remove(obj);
 	}
 	
 	public void update(float dt){
 		getQuadtree().clear();
 		
-		for(int i = 0; i < getCollisionBoxes().size(); i++)
-			getQuadtree().insert(getCollisionBoxes().get(i));
+		for(int i = 0; i < getCollideables().size(); i++)
+			getQuadtree().insert(getCollideables().get(i).getCollisionBox());
 		
 		List<BoundingBox> returnObjects = new ArrayList<BoundingBox>();
 		
-		for(int i = 0; i < getCollisionBoxes().size(); i++){
+		for(int i = 0; i < getCollideables().size(); i++){
 			returnObjects.clear();
-			BoundingBox box1 = getCollisionBoxes().get(i);
+			BoundingBox box1 = getCollideables().get(i).getCollisionBox();
 			getQuadtree().retrieve(returnObjects, box1);
 			
 			for(int j = 0; j < returnObjects.size(); j++){
@@ -57,8 +57,8 @@ public class CollisionManager {
 		return m_QuadTree;
 	}
 	
-	private static synchronized List<BoundingBox> getCollisionBoxes(){
-		return m_CollisionBoxes;
+	private static synchronized List<Collideable> getCollideables(){
+		return m_Collideables;
 	}
 
 }

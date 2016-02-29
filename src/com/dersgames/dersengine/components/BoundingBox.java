@@ -42,9 +42,6 @@ public class BoundingBox extends GameComponent{
 
 	@Override
 	public void update(float dt) {
-		if(!m_GameObject.isAlive())
-			CollisionManager.removeCollisionBox(this);
-		
 		x = m_GameObject.getX();
 		y = m_GameObject.getY();
 	}

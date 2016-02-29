@@ -20,6 +20,7 @@ public class Level {
 
 	private static Player m_Player;
 	private SceneGraph m_SceneGraph;
+	private static TileLayer m_TileLayer;
 	
 	private int timer = 0;
 	private float ambientLight = 1.0f;
@@ -31,24 +32,24 @@ public class Level {
 		SpriteSheet playerSpriteSheet = new SpriteSheet("playerspritesheet");
 		SpriteSheet tileSet = new SpriteSheet("tileset");
 		
-		GameObject tileLayer = new GameObject("TileLayer");
-		TileLayer tl = new TileLayer("TileLayer", "map", 16);
+		GameObject tileMap = new GameObject("TileMap");
+		m_TileLayer = new TileLayer("TileLayer", "map", 16);
 		
 		AnimationSequence waterAnim = new AnimationSequence("WaterAnimation", 15);
 		waterAnim.addSequence(tileSet, 3, 0, 16, 16, 4);
 		
-		tl.addTile(ColorRGBA.GRAY,   new Tile(new Sprite(tileSet, 0, 0, 16, 16), true));
-		tl.addTile(ColorRGBA.GREEN,  new Tile(new Sprite(tileSet, 1, 0, 16, 16), false));
-		tl.addTile(ColorRGBA.BROWN,  new Tile(new Sprite(tileSet, 2, 0, 16, 16), false));
-		tl.addTile(ColorRGBA.YELLOW, new Tile(new Sprite(tileSet, 1, 1, 16, 16), false));
-		tl.addTile(ColorRGBA.BLUE,   new AnimatedTile(new Sprite(tileSet, 3, 0, 16, 16), waterAnim, false));
+		m_TileLayer.addTile(ColorRGBA.GRAY,   new Tile(new Sprite(tileSet, 0, 0, 16, 16), true));
+		m_TileLayer.addTile(ColorRGBA.GREEN,  new Tile(new Sprite(tileSet, 1, 0, 16, 16), false));
+		m_TileLayer.addTile(ColorRGBA.BROWN,  new Tile(new Sprite(tileSet, 2, 0, 16, 16), false));
+		m_TileLayer.addTile(ColorRGBA.YELLOW, new Tile(new Sprite(tileSet, 1, 1, 16, 16), false));
+		m_TileLayer.addTile(ColorRGBA.BLUE,   new AnimatedTile(new Sprite(tileSet, 3, 0, 16, 16), waterAnim, false));
 		
-		tileLayer.attachComponent(tl);
+		tileMap.attachComponent(m_TileLayer);
 		
-		m_Player = new Player(tl.getPlayerStart(ColorRGBA.GREEN), 32, 32, playerSpriteSheet);
+		m_Player = new Player(m_TileLayer.getPlayerStart(ColorRGBA.GREEN), 32, 32, playerSpriteSheet);
 		m_Player.init();
 		
-		m_SceneGraph.addChild(tileLayer);
+		m_SceneGraph.addChild(tileMap);
 		
 		for(int i = 0; i < 50; i++){
 			float x = Randomizer.getFloat(50, 1000);
@@ -73,6 +74,10 @@ public class Level {
 		if(timer < 7500) timer++;
 		else timer = 0;
 		
+		dayAndNightCycle(dt);
+	}
+	
+	private void dayAndNightCycle(float dt){
 		if(ambientLight <= 0.1f){
 			ambientLight = 0.1f;
 			night = true;
@@ -96,6 +101,10 @@ public class Level {
 		}
 	}
 
+	public static Tile getTile(int x, int y){
+		return m_TileLayer.getTile(x, y);
+	}
+	
 	public float getAmbientLight() {
 		return ambientLight;
 	}

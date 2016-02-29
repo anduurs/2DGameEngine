@@ -14,10 +14,10 @@ public class GameObject {
 	private List<RenderableComponent> m_RenderableComponents;
 	private List<GameObject> m_Children;
 	
-	private String m_Tag;
-	private Vector2f m_Position;
-	private GameObject m_Parent;
-	private boolean m_Alive;
+	protected String m_Tag;
+	protected Vector2f m_Position;
+	protected GameObject m_Parent;
+	protected boolean m_Alive;
 	
 	private float xOffset, yOffset;
 	
@@ -119,8 +119,11 @@ public class GameObject {
 		Iterator<GameObject> i = getChildren().iterator();
 		while(i.hasNext()){
 			GameObject go = i.next();
-			if(!go.isAlive())
+			if(!go.isAlive()){
+				if(go instanceof Collideable)
+					CollisionManager.removeCollisionBox((Collideable)go);
 				i.remove();
+			}
 			else go.clearDeadGameObjects();
 		}
 	}

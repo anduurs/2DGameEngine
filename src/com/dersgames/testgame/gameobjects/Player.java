@@ -12,7 +12,7 @@ import com.dersgames.dersengine.graphics.AnimationSequence;
 import com.dersgames.dersengine.graphics.ColorRGBA;
 import com.dersgames.dersengine.graphics.SpriteSheet;
 import com.dersgames.testgame.components.player.PlayerInputComponent;
-import com.dersgames.testgame.components.player.WeaponComponent;
+import com.dersgames.testgame.components.player.Weapon;
 
 public class Player extends GameObject implements Collideable{
 	
@@ -25,17 +25,18 @@ public class Player extends GameObject implements Collideable{
 		m_Sheet = sheet;
 		m_Width = width;
 		m_Height = height;
+		CollisionManager.addCollisionBox(this);
 	}
 	
 	public void init(){
 		m_CollisionBox = new BoundingBox("PlayerBox", getX(), getY(), m_Width, m_Height);
-		CollisionManager.addCollisionBox(m_CollisionBox);
+		
 		attachComponent(m_CollisionBox);
 		attachComponent(new PlayerInputComponent("PlayerInput"));
 		
 		GameObject playerWeapon = new GameObject("PlayerWeapon");
 		playerWeapon.attachComponent(new StaticSprite("WeaponSprite", 6, 6, ColorRGBA.GREEN, CoordinateSpace.WORLD_SPACE));
-		playerWeapon.attachComponent(new WeaponComponent("Weapon"));
+		playerWeapon.attachComponent(new Weapon("Weapon"));
 		attachChild(playerWeapon, 7, 20);
 		
 		AnimationComponent anim = new AnimationComponent("PlayerAnimation", m_Sheet, CoordinateSpace.WORLD_SPACE);

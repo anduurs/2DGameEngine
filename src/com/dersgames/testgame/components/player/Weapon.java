@@ -2,9 +2,9 @@ package com.dersgames.testgame.components.player;
 
 import com.dersgames.dersengine.components.GameComponent;
 
-public class WeaponComponent extends GameComponent{
+public class Weapon extends GameComponent{
 
-	public WeaponComponent(String tag) {
+	public Weapon(String tag) {
 		super(tag);
 		
 	}

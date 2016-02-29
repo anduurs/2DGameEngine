@@ -18,11 +18,11 @@ public class Enemy extends GameObject implements Collideable{
 	private int m_Width, m_Height;
 	
 	public Enemy(Vector2f pos, int width, int height, SpriteSheet sheet){
-		super("Enemy" , pos);
-		
+		super("Enemy" + instancecount++, pos);
 		m_Sheet = sheet;
 		m_Width = width;
 		m_Height = height;
+		CollisionManager.addCollisionBox(this);
 	}
 	
 	public void init(){
@@ -30,7 +30,6 @@ public class Enemy extends GameObject implements Collideable{
 		attachComponent(m_CollisionBox);
 //		enemyBox.addCollisionSprite();
 		
-		CollisionManager.addCollisionBox(m_CollisionBox);
 		attachComponent(new StaticSprite("EnemySprite", m_Sheet, 
 				2, 1, m_Width, m_Height, CoordinateSpace.WORLD_SPACE));
 
@@ -39,8 +38,9 @@ public class Enemy extends GameObject implements Collideable{
 	@Override
 	public void collisionWith(Collideable collideable) {
 		
-		if(collideable instanceof Player)
+		if(collideable instanceof Player){
 			destroy();
+		}
 	}
 
 	@Override
