@@ -13,9 +13,7 @@ public class AssetsManager {
 	
 	private static AssetsManager instance = null;
 	
-	private AssetsManager(){
-		
-	}
+	private AssetsManager(){}
 	
 	public static AssetsManager getInstance(){
 		if(instance == null)

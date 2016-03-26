@@ -9,12 +9,15 @@ import com.dersgames.dersengine.graphics.Display;
 public class CollisionManager {
 	
 	private Quadtree m_QuadTree = new Quadtree(0, new BoundingBox(0, 0, 
-			Display.getDisplayWidth() * Display.SCALE, 
-			Display.getDisplayHeight() * Display.SCALE));
+			Display.getDisplayWidth(), 
+			Display.getDisplayHeight()));
 	
 	private static List<Collideable> m_Collideables = new ArrayList<Collideable>();
+	private List<BoundingBox> returnObjects;
 
-	public CollisionManager(){}
+	public CollisionManager(){
+		returnObjects = new ArrayList<BoundingBox>();
+	}
 	
 	public static void addCollisionBox(Collideable obj){
 		getCollideables().add(obj);
@@ -29,8 +32,6 @@ public class CollisionManager {
 		
 		for(int i = 0; i < getCollideables().size(); i++)
 			getQuadtree().insert(getCollideables().get(i).getCollisionBox());
-		
-		List<BoundingBox> returnObjects = new ArrayList<BoundingBox>();
 		
 		for(int i = 0; i < getCollideables().size(); i++){
 			returnObjects.clear();

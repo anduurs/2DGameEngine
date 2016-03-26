@@ -1,9 +1,5 @@
 package com.dersgames.dersengine.graphics;
 
-import com.dersgames.dersengine.graphics.AnimationSequence;
-import com.dersgames.dersengine.graphics.RenderContext;
-import com.dersgames.dersengine.graphics.Sprite;
-
 public class AnimatedTile extends Tile{
 	
 	private AnimationSequence m_Sequence;

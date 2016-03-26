@@ -1,5 +1,6 @@
 package com.dersgames.dersengine.components;
 
+import com.dersgames.dersengine.core.Debug;
 import com.dersgames.dersengine.core.GameObject;
 
 public class Camera2D extends GameComponent{
@@ -23,18 +24,10 @@ public class Camera2D extends GameComponent{
 
 	@Override
 	public void update(float dt) {
-//		float currentX = m_GameObject.getPosition().x;
-//		float currentY = m_GameObject.getPosition().y;
-//		float targetX = m_Player.getX() - (m_FrustumWidth / 2 - 32);
-//		float targetY = m_Player.getY() - (m_FrustumHeight / 2 - 32);
-//		float diffX = (targetX - currentX) / steps;
-//		float diffY = (targetY - currentY) / steps;
-//		
-//		m_GameObject.getPosition().x += diffX;
-//		m_GameObject.getPosition().y += diffY;
-		
 		m_GameObject.getPosition().x = m_Player.getX() - (m_FrustumWidth / 2 - 32);
 		m_GameObject.getPosition().y = m_Player.getY() - (m_FrustumHeight / 2 - 32);
+		
+//		Debug.log("x: " +m_GameObject.getPosition().x+ "," + " y:"+ m_GameObject.getPosition().y);
 	}
 
 }

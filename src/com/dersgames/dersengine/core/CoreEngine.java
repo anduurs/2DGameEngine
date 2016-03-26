@@ -7,8 +7,8 @@ import com.dersgames.dersengine.utils.AssetsManager;
 public class CoreEngine implements Runnable{
 	
 	private boolean m_FpsCap;
-	private volatile boolean m_Running = false;
-	private Thread m_Thread;
+	private static volatile boolean m_Running = false;
+	private static Thread m_Thread;
 	
 	private Display m_Display;
 	private GameStateManager m_GameStateManager;
@@ -34,7 +34,7 @@ public class CoreEngine implements Runnable{
 		}
 	}
 	
-	public synchronized void stop(){
+	public static synchronized void stop(){
 		m_Running = false;
 		try {
 			m_Thread.join();
@@ -52,7 +52,7 @@ public class CoreEngine implements Runnable{
 	}
 		
 	private void render(){
-		m_Display.clearBuffers();
+		m_Display.clearBuffer();
 		m_GameStateManager.render(m_RenderContext);
 		m_Display.swapBuffers();
 	}
@@ -103,13 +103,12 @@ public class CoreEngine implements Runnable{
 			}
 				
 			if(frameCounter >= 1){
-				System.out.println(ups + " ups , " + fps + " fps");
+				Debug.log(ups + " ups , " + fps + " fps");
 				fps = 0;
 				ups = 0;
 				frameCounter = 0;
 			}
 		}
-		
 		stop();
 	}
 	

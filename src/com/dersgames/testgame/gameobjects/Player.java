@@ -2,8 +2,8 @@ package com.dersgames.testgame.gameobjects;
 
 import com.dersgames.dersengine.components.AnimationComponent;
 import com.dersgames.dersengine.components.BoundingBox;
-import com.dersgames.dersengine.components.RenderableComponent.CoordinateSpace;
-import com.dersgames.dersengine.components.StaticSprite;
+import com.dersgames.dersengine.components.Renderable2D;
+import com.dersgames.dersengine.components.Renderable2D.CoordinateSpace;
 import com.dersgames.dersengine.core.Collideable;
 import com.dersgames.dersengine.core.CollisionManager;
 import com.dersgames.dersengine.core.GameObject;
@@ -11,7 +11,8 @@ import com.dersgames.dersengine.core.Vector2f;
 import com.dersgames.dersengine.graphics.AnimationSequence;
 import com.dersgames.dersengine.graphics.ColorRGBA;
 import com.dersgames.dersengine.graphics.SpriteSheet;
-import com.dersgames.testgame.components.player.PlayerInputComponent;
+import com.dersgames.testgame.components.player.PlayerInput;
+import com.dersgames.testgame.components.player.PlayerMovement;
 import com.dersgames.testgame.components.player.Weapon;
 
 public class Player extends GameObject implements Collideable{
@@ -32,10 +33,11 @@ public class Player extends GameObject implements Collideable{
 		m_CollisionBox = new BoundingBox("PlayerBox", getX(), getY(), m_Width, m_Height);
 		
 		attachComponent(m_CollisionBox);
-		attachComponent(new PlayerInputComponent("PlayerInput"));
+		attachComponent(new PlayerInput("PlayerInput"));
+		attachComponent(new PlayerMovement("PlayerMove", 1.0f));
 		
 		GameObject playerWeapon = new GameObject("PlayerWeapon");
-		playerWeapon.attachComponent(new StaticSprite("WeaponSprite", 6, 6, ColorRGBA.GREEN, CoordinateSpace.WORLD_SPACE));
+		playerWeapon.attachComponent(new Renderable2D("WeaponSprite", 6, 6, ColorRGBA.GREEN, CoordinateSpace.WORLD_SPACE));
 		playerWeapon.attachComponent(new Weapon("Weapon"));
 		attachChild(playerWeapon, 7, 20);
 		

@@ -5,13 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.dersgames.dersengine.components.GameComponent;
-import com.dersgames.dersengine.components.RenderableComponent;
+import com.dersgames.dersengine.components.Renderable2D;
 import com.dersgames.dersengine.graphics.RenderContext;
 
 public class GameObject {
 	
 	private List<GameComponent> m_Components;
-	private List<RenderableComponent> m_RenderableComponents;
+	private List<Renderable2D> m_RenderableComponents;
 	private List<GameObject> m_Children;
 	
 	protected String m_Tag;
@@ -40,16 +40,21 @@ public class GameObject {
 		
 		m_Children = new ArrayList<GameObject>();
 		m_Components = new ArrayList<GameComponent>();
-		m_RenderableComponents = new ArrayList<RenderableComponent>();
+		m_RenderableComponents = new ArrayList<Renderable2D>();
 		
 		m_Position = position;
+	}
+	
+	public void send(String message){
+		for(GameComponent gc : getComponents())
+			gc.receive(message);
 	}
 	
 	public GameComponent attachComponent(GameComponent component){
 		component.setGameObject(this);
 		
-		if(component instanceof RenderableComponent){
-			RenderableComponent rc = (RenderableComponent) component;
+		if(component instanceof Renderable2D){
+			Renderable2D rc = (Renderable2D) component;
 			getRenderableComponents().add(rc);
 		}
 		
@@ -104,7 +109,7 @@ public class GameObject {
 	}
 	
 	public void renderComponents(RenderContext renderContext){
-		for(RenderableComponent rc : getRenderableComponents())
+		for(Renderable2D rc : getRenderableComponents())
 			if(rc.isEnabled())
 				rc.render(renderContext);
 	}
@@ -130,17 +135,6 @@ public class GameObject {
 	
 	public void destroy(){
 		m_Alive = false;
-		
-//		for(GameObject go : getChildren())
-//			go.destroy();
-//		
-//		getChildren().clear();
-//		getComponents().clear();
-//		getRenderableComponents().clear();
-//		
-//		if(m_Parent != null){
-//			m_Parent.removeChild(this);
-//		}
 	}
 	
 	public void removeChild(GameObject child){
@@ -155,7 +149,7 @@ public class GameObject {
 		return m_Components;
 	}
 	
-	private synchronized List<RenderableComponent> getRenderableComponents(){
+	private synchronized List<Renderable2D> getRenderableComponents(){
 		return m_RenderableComponents;
 	}
 

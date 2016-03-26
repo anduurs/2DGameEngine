@@ -14,7 +14,7 @@ import com.dersgames.dersengine.graphics.Tile;
 import com.dersgames.dersengine.utils.AssetsManager;
 import com.dersgames.dersengine.utils.MathUtil;
 
-public class TileLayer extends RenderableComponent{
+public class TileLayer extends Renderable2D{
 	
 	private HashMap<Integer, Tile> m_Tiles;
 	private Bitmap m_Bitmap;
@@ -26,7 +26,7 @@ public class TileLayer extends RenderableComponent{
 	public static int SHIFT_VALUE;
 	
 	public TileLayer(String tag, int width, int height, int tileSize){
-		super(tag);
+		super(tag, CoordinateSpace.WORLD_SPACE);
 		
 		TILE_SIZE = tileSize;
 		SHIFT_VALUE = MathUtil.log2(TILE_SIZE);
@@ -42,7 +42,7 @@ public class TileLayer extends RenderableComponent{
 	}
 	
 	public TileLayer(String tag, String imageTag, int tileSize){
-		super(tag);
+		super(tag, CoordinateSpace.WORLD_SPACE);
 		
 		TILE_SIZE = tileSize;
 		SHIFT_VALUE = MathUtil.log2(TILE_SIZE);
@@ -56,7 +56,6 @@ public class TileLayer extends RenderableComponent{
 		
 		image.getRGB(0, 0, m_Width, m_Height, m_Bitmap.getPixelArray(), 0, m_Width);
 	}
-	
 	
 	public Vector2f getPlayerStart(int spawnTileColorID){
 		Vector2f playerStart = null;

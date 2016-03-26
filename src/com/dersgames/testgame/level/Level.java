@@ -51,9 +51,9 @@ public class Level {
 		
 		m_SceneGraph.addChild(tileMap);
 		
-		for(int i = 0; i < 50; i++){
-			float x = Randomizer.getFloat(50, 1000);
-			float y = Randomizer.getFloat(50, 1000);
+		for(int i = 0; i < 100; i++){
+			float x = Randomizer.getFloat(0, 16*100);
+			float y = Randomizer.getFloat(0, 16*100);
 			
 			Enemy enemy = new Enemy(new Vector2f(x, y), 32, 32, playerSpriteSheet);
 			enemy.init();
@@ -62,7 +62,8 @@ public class Level {
 		}
 	
 		GameObject camera = new GameObject("MainCamera");
-		Camera2D cam = new Camera2D("Camera2D", m_Player, Display.getDisplayWidth(), Display.getDisplayHeight());
+		Camera2D cam = new Camera2D("Camera2D", m_Player, 
+				Display.getFrameBufferWidth(), Display.getFrameBufferHeight());
 		camera.attachComponent(cam);
 		cam.init();
 		

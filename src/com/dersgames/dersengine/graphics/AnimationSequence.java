@@ -7,13 +7,13 @@ import com.dersgames.dersengine.graphics.SpriteSheet;
 
 public class AnimationSequence {
 	
-	private String m_Tag;
+	private int currentFrame = 0;
 	private int m_AnimationSpeed;
 	
-	private ArrayList<Sprite> m_Sprites;
-	
 	private Sprite currentSprite;
-	private int currentFrame = 0;
+	private String m_Tag;
+
+	private ArrayList<Sprite> m_Sprites;
 	
 	public AnimationSequence(String tag, int animSpeed) {
 		m_Tag = tag;

@@ -9,6 +9,7 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import com.dersgames.dersengine.core.CoreEngine;
 import com.dersgames.dersengine.input.KeyInput;
 
 public class Display extends Canvas{
@@ -22,7 +23,7 @@ public class Display extends Canvas{
 	private int[] m_PixelData;
 	private BufferStrategy m_BufferStrategy;
 	
-	private Bitmap m_FrameBuffer;
+	private static Bitmap m_FrameBuffer;
 	private Graphics m_GraphicsContext;
 	private KeyInput m_KeyInput;
 	private static String m_Title;
@@ -46,7 +47,7 @@ public class Display extends Canvas{
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		createBufferStrategy(1);
+		createBufferStrategy(3);
 		m_BufferStrategy = getBufferStrategy();
 		
 		frame.setVisible(true);
@@ -63,16 +64,17 @@ public class Display extends Canvas{
 	
 	public void getInput(){
 		m_KeyInput.tick();
-		if(KeyInput.ESCAPE)
+		if(KeyInput.ESCAPE){
 			System.exit(0);
+		}
 	}
 	
-	public void clearBuffers(int col){
+	public void clearBuffer(int col){
 		m_FrameBuffer.setPixels(col);
 	}
 	
-	public void clearBuffers(){
-		clearBuffers(ColorRGBA.BLACK);
+	public void clearBuffer(){
+		clearBuffer(ColorRGBA.BLACK);
 	}
 	
 	public void swapBuffers(){
@@ -93,18 +95,18 @@ public class Display extends Canvas{
 	}
 	
 	public static int getDisplayWidth(){
-		return m_Width / SCALE;
+		return m_Width;
 	}
 	
 	public static int getDisplayHeight(){
-		return m_Height / SCALE;
+		return m_Height;
 	}
 	
-	public static void setTitle(String title){
-		m_Title = title;
+	public static int getFrameBufferWidth(){
+		return m_FrameBuffer.getWidth();
 	}
 	
-	public static String getTitle(){
-		return m_Title;
+	public static int getFrameBufferHeight(){
+		return m_FrameBuffer.getHeight();
 	}
 }

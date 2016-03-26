@@ -1,8 +1,8 @@
 package com.dersgames.testgame.gameobjects;
 
 import com.dersgames.dersengine.components.BoundingBox;
-import com.dersgames.dersengine.components.StaticSprite;
-import com.dersgames.dersengine.components.RenderableComponent.CoordinateSpace;
+import com.dersgames.dersengine.components.Renderable2D;
+import com.dersgames.dersengine.components.Renderable2D.CoordinateSpace;
 import com.dersgames.dersengine.core.Collideable;
 import com.dersgames.dersengine.core.CollisionManager;
 import com.dersgames.dersengine.core.GameObject;
@@ -30,7 +30,7 @@ public class Enemy extends GameObject implements Collideable{
 		attachComponent(m_CollisionBox);
 //		enemyBox.addCollisionSprite();
 		
-		attachComponent(new StaticSprite("EnemySprite", m_Sheet, 
+		attachComponent(new Renderable2D("EnemySprite", m_Sheet, 
 				2, 1, m_Width, m_Height, CoordinateSpace.WORLD_SPACE));
 
 	}

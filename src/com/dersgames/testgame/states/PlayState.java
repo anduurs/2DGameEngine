@@ -22,8 +22,8 @@ public class PlayState extends GameState{
 		AssetsManager.addAsset("tileset", "tileset.png");
 		AssetsManager.addAsset("map", "testmap.png");
 		
-		m_Level = new Level("map", sceneGraph);
 		m_CollisionManager = new CollisionManager();
+		m_Level = new Level("map", sceneGraph);
 	}
 	
 	@Override
