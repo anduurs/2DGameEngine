@@ -24,18 +24,24 @@ public class Bitmap {
 	
 	public void applyAmbientLight(float ambientFactor){
 		for(int i = 0; i < m_Pixels.length; i++){
+			//extract the red channel of the pixel
 			int r = ((m_Pixels[i] >> 16) & 0xFF);
+			//extract the green channel of the pixel
 			int g = ((m_Pixels[i] >> 8) & 0xFF);
+			//extract the blue channel of the pixel
 			int b = ((m_Pixels[i]) & 0xFF);
 			
+			//multiply each channel by the ambient factor
 			r *= ambientFactor;
-			g *= ambientFactor;
+			g *= ambientFactor * 0.46;
 			b *= ambientFactor;
 		
+			//make sure they dont exceed 255
 			if(r > 255) r = 255;
 			if(g > 255) g = 255;
 			if(b > 255) b = 255;
 			
+			//recombine the new modified channels into a pixel
 			m_Pixels[i] = r << 16 | g << 8 | b;
 		}
 	}

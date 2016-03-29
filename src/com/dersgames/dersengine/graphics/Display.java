@@ -9,7 +9,7 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
-import com.dersgames.dersengine.core.CoreEngine;
+import com.dersgames.dersengine.core.Game;
 import com.dersgames.dersengine.input.KeyInput;
 
 public class Display extends Canvas{

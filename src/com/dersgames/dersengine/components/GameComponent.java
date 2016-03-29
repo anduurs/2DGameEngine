@@ -17,6 +17,7 @@ public abstract class GameComponent {
 	public void init(){}
 	public abstract void update(float dt);
 	public void receive(String message){}
+	public void receive(String message, GameComponent sender){}
 	
 	public GameObject getGameObject() {
 		return m_GameObject;

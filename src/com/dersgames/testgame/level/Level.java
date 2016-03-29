@@ -19,7 +19,6 @@ import com.dersgames.testgame.gameobjects.Player;
 public class Level {
 
 	private static Player m_Player;
-	private SceneGraph m_SceneGraph;
 	private static TileLayer m_TileLayer;
 	
 	private int timer = 0;
@@ -27,8 +26,6 @@ public class Level {
 	private boolean day = true, night = false;
 	
 	public Level(String mapName, SceneGraph sceneGraph){
-		m_SceneGraph = sceneGraph;
-		
 		SpriteSheet playerSpriteSheet = new SpriteSheet("playerspritesheet");
 		SpriteSheet tileSet = new SpriteSheet("tileset");
 		
@@ -42,14 +39,16 @@ public class Level {
 		m_TileLayer.addTile(ColorRGBA.GREEN,  new Tile(new Sprite(tileSet, 1, 0, 16, 16), false));
 		m_TileLayer.addTile(ColorRGBA.BROWN,  new Tile(new Sprite(tileSet, 2, 0, 16, 16), false));
 		m_TileLayer.addTile(ColorRGBA.YELLOW, new Tile(new Sprite(tileSet, 1, 1, 16, 16), false));
-		m_TileLayer.addTile(ColorRGBA.BLUE,   new AnimatedTile(new Sprite(tileSet, 3, 0, 16, 16), waterAnim, false));
+		Tile waterTile =  new AnimatedTile(new Sprite(tileSet, 3, 0, 16, 16), waterAnim, false);
+		m_TileLayer.addTile(ColorRGBA.BLUE,  waterTile);
+		m_TileLayer.setVoidTile(waterTile);
 		
 		tileMap.attachComponent(m_TileLayer);
 		
 		m_Player = new Player(m_TileLayer.getPlayerStart(ColorRGBA.GREEN), 32, 32, playerSpriteSheet);
 		m_Player.init();
 		
-		m_SceneGraph.addChild(tileMap);
+		sceneGraph.addChild(tileMap);
 		
 		for(int i = 0; i < 100; i++){
 			float x = Randomizer.getFloat(0, 16*100);

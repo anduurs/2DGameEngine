@@ -28,9 +28,9 @@ public class PlayState extends GameState{
 	
 	@Override
 	public void update(float dt) {
+		super.update(dt);
 		m_CollisionManager.update(dt);
 		m_Level.update(dt);
-		super.update(dt);
 	}
 	
 	@Override

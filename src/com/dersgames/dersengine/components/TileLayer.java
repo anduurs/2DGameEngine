@@ -25,6 +25,8 @@ public class TileLayer extends Renderable2D{
 	public static int TILE_SIZE;
 	public static int SHIFT_VALUE;
 	
+	private Tile m_VoidTile;
+	
 	public TileLayer(String tag, int width, int height, int tileSize){
 		super(tag, CoordinateSpace.WORLD_SPACE);
 		
@@ -78,13 +80,13 @@ public class TileLayer extends Renderable2D{
 	
 	public Tile getTile(int x, int y){
 		if(x < 0 || x >= m_Width || y < 0 || y >= m_Height)
-			return null;
+			return m_VoidTile;
 		
 		for(Integer i : getTiles().keySet())
 			if(m_Bitmap.getPixel(x, y) == i)
 				return getTiles().get(i);
 		
-		return null;
+		return m_VoidTile;
 	}
 	
 	@Override
@@ -102,6 +104,10 @@ public class TileLayer extends Renderable2D{
 	public void render(RenderContext renderContext){
 		GameObject go = SceneGraph.getRoot().findChildByTag("MainCamera");
 		renderContext.renderLayer(go.getX(), go.getY(), this);
+	}
+	
+	public void setVoidTile(Tile tile){
+		m_VoidTile = tile;
 	}
 	
 	public synchronized HashMap<Integer, Tile> getTiles(){

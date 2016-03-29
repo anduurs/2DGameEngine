@@ -1,6 +1,7 @@
 package com.dersgames.dersengine.components;
 
 import com.dersgames.dersengine.components.Renderable2D.CoordinateSpace;
+import com.dersgames.dersengine.core.Debug;
 import com.dersgames.dersengine.graphics.ColorRGBA;
 
 public class BoundingBox extends GameComponent{
@@ -25,15 +26,14 @@ public class BoundingBox extends GameComponent{
 	public void addCollisionSprite(){
 		Renderable2D sprite = new Renderable2D("BoundingBoxSprite" + instanceCount++, width, height,
 				ColorRGBA.RED, CoordinateSpace.WORLD_SPACE);
-		
 		m_GameObject.attachComponent(sprite);
 	}
 	
 	public boolean intersect(BoundingBox box){
-		  if(this.x <= box.x + box.width && 
-			this.x + this.width >= box.x && 
-			this.y <= box.y + box.height && 
-			this.height + this.y >= box.y){
+		  if(this.x < box.x + box.width && 
+			this.x + this.width > box.x && 
+			this.y < box.y + box.height && 
+			this.height + this.y > box.y){
 			return true;
 		}
 		  return false;

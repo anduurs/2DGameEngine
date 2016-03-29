@@ -24,7 +24,7 @@ public class Timer {
 		if(unit == TimeUnit.SECONDS){
 			return (float)(m_Timer/60.0f);
 		}else{
-			return (float)((m_Timer/60.0f) * 1000);
+			return (float)((m_Timer/60.0f) * 1000.0f);
 		}
 	}
 	

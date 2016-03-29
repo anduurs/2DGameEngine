@@ -19,7 +19,7 @@ public class GameObject {
 	protected GameObject m_Parent;
 	protected boolean m_Alive;
 	
-	private float xOffset, yOffset;
+	private float m_ChildX, m_ChildY;
 	
 	public GameObject(){
 		this("GameObject");
@@ -45,9 +45,26 @@ public class GameObject {
 		m_Position = position;
 	}
 	
-	public void send(String message){
+	public void sendToComponents(String message){
 		for(GameComponent gc : getComponents())
 			gc.receive(message);
+	}
+	
+	public void send(String message){
+		sendToComponents(message);
+		for(GameObject go : getChildren())
+			go.send(message);
+	}
+	
+	public void sendToComponents(String message, GameComponent sender){
+		for(GameComponent gc : getComponents())
+			gc.receive(message, sender);
+	}
+	
+	public void send(String message, GameComponent sender){
+		sendToComponents(message);
+		for(GameObject go : getChildren())
+			go.send(message, sender);
 	}
 	
 	public GameComponent attachComponent(GameComponent component){
@@ -76,12 +93,12 @@ public class GameObject {
 		return gameObject;
 	}
 	
-	public GameObject attachChild(GameObject gameObject, float xOffset, float yOffset){
+	public GameObject attachChild(GameObject gameObject, float xPos, float yPos){
 		gameObject.setParent(this);
-		this.xOffset = xOffset;
-		this.yOffset = yOffset;
-		gameObject.getPosition().x = m_Position.x + xOffset;
-		gameObject.getPosition().y = m_Position.y + yOffset;
+		this.m_ChildX = xPos;
+		this.m_ChildY = yPos;
+		gameObject.getPosition().x = m_Position.x + xPos;
+		gameObject.getPosition().y = m_Position.y + yPos;
 		getChildren().add(gameObject);
 		return gameObject;
 	}
@@ -125,8 +142,6 @@ public class GameObject {
 		while(i.hasNext()){
 			GameObject go = i.next();
 			if(!go.isAlive()){
-				if(go instanceof Collideable)
-					CollisionManager.removeCollisionBox((Collideable)go);
 				i.remove();
 			}
 			else go.clearDeadGameObjects();
@@ -194,18 +209,18 @@ public class GameObject {
 	}
 
 	public float getxOffset() {
-		return xOffset;
+		return m_ChildX;
 	}
 
 	public void setxOffset(float xOffset) {
-		this.xOffset = xOffset;
+		this.m_ChildX = xOffset;
 	}
 
 	public float getyOffset() {
-		return yOffset;
+		return m_ChildY;
 	}
 
 	public void setyOffset(float yOffset) {
-		this.yOffset = yOffset;
+		this.m_ChildY = yOffset;
 	}
 }

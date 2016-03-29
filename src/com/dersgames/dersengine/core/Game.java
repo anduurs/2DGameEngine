@@ -4,7 +4,7 @@ import com.dersgames.dersengine.graphics.Display;
 import com.dersgames.dersengine.graphics.RenderContext;
 import com.dersgames.dersengine.utils.AssetsManager;
 
-public class CoreEngine implements Runnable{
+public class Game implements Runnable{
 	
 	private boolean m_FpsCap;
 	private static volatile boolean m_Running = false;
@@ -14,7 +14,7 @@ public class CoreEngine implements Runnable{
 	private GameStateManager m_GameStateManager;
 	private RenderContext m_RenderContext;
 	
-	public CoreEngine(Display display, GameStateManager gsm, boolean fpsCap){
+	public Game(Display display, GameStateManager gsm, boolean fpsCap){
 		AssetsManager.getInstance();
 		m_Display = display;
 		m_GameStateManager = gsm;
@@ -91,7 +91,7 @@ public class CoreEngine implements Runnable{
 			
 			while(lag >= MS_PER_UPDATE){
 				getInput();
-				update(dt*10.0f);
+				update(dt);
 				ups++;
 				lag -= MS_PER_UPDATE;
 				shouldRender = true;
