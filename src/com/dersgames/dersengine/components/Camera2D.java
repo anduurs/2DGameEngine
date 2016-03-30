@@ -1,6 +1,5 @@
 package com.dersgames.dersengine.components;
 
-import com.dersgames.dersengine.core.Debug;
 import com.dersgames.dersengine.core.GameObject;
 
 public class Camera2D extends GameComponent{
@@ -26,8 +25,6 @@ public class Camera2D extends GameComponent{
 	public void update(float dt) {
 		m_GameObject.getPosition().x = m_Player.getX() - (m_FrustumWidth / 2 - 32);
 		m_GameObject.getPosition().y = m_Player.getY() - (m_FrustumHeight / 2 - 32);
-		
-//		Debug.log("x: " +m_GameObject.getPosition().x+ "," + " y:"+ m_GameObject.getPosition().y);
 	}
 
 }

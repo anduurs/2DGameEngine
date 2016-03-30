@@ -103,7 +103,7 @@ public class Game implements Runnable{
 			}
 				
 			if(frameCounter >= 1){
-				Debug.log(ups + " ups , " + fps + " fps");
+				//Debug.log(ups + " ups , " + fps + " fps");
 				fps = 0;
 				ups = 0;
 				frameCounter = 0;

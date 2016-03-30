@@ -3,11 +3,14 @@ package com.dersgames.testgame.gameobjects;
 import com.dersgames.dersengine.components.BoundingBox;
 import com.dersgames.dersengine.components.Renderable2D;
 import com.dersgames.dersengine.components.Renderable2D.CoordinateSpace;
+import com.dersgames.dersengine.core.Collideable;
+import com.dersgames.dersengine.core.CollisionManager;
 import com.dersgames.dersengine.core.GameObject;
 import com.dersgames.dersengine.core.Vector2f;
 import com.dersgames.dersengine.graphics.SpriteSheet;
+import com.dersgames.testgame.components.enemy.EnemyController;
 
-public class Enemy extends GameObject{
+public class Enemy extends GameObject implements Collideable{
 	
 	private static int instancecount = 0;
 	
@@ -20,15 +23,32 @@ public class Enemy extends GameObject{
 		m_Sheet = sheet;
 		m_Width = width;
 		m_Height = height;
+		
+		CollisionManager.addCollisionBox(this);
 	}
 	
 	public void init(){
 		m_CollisionBox = new BoundingBox("EnemyBox", getX(), getY(), m_Width, m_Height);
 		attachComponent(m_CollisionBox);
-		m_CollisionBox.addCollisionSprite();
+		//m_CollisionBox.addCollisionSprite();
+		attachComponent(new EnemyController("EnemyController"));
 		
 		attachComponent(new Renderable2D("EnemySprite", m_Sheet, 
 				2, 1, m_Width, m_Height, CoordinateSpace.WORLD_SPACE));
+	}
+
+	@Override
+	public void collisionWith(Collideable collideable) {
+		
+		if(collideable instanceof Player){
+			//destroy();
+		}
+		
+	}
+
+	@Override
+	public BoundingBox getCollisionBox() {
+		return m_CollisionBox;
 	}
 
 }

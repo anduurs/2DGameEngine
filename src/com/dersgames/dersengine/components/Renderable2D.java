@@ -33,6 +33,11 @@ public class Renderable2D extends GameComponent{
 	}
 	
 	@Override
+	public void init() {
+		
+	}
+	
+	@Override
 	public void update(float dt) {}
 	
 	public void render(RenderContext renderer){

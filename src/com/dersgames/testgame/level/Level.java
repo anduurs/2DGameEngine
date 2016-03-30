@@ -39,8 +39,9 @@ public class Level {
 		m_TileLayer.addTile(ColorRGBA.GREEN,  new Tile(new Sprite(tileSet, 1, 0, 16, 16), false));
 		m_TileLayer.addTile(ColorRGBA.BROWN,  new Tile(new Sprite(tileSet, 2, 0, 16, 16), false));
 		m_TileLayer.addTile(ColorRGBA.YELLOW, new Tile(new Sprite(tileSet, 1, 1, 16, 16), false));
+		
 		Tile waterTile =  new AnimatedTile(new Sprite(tileSet, 3, 0, 16, 16), waterAnim, false);
-		m_TileLayer.addTile(ColorRGBA.BLUE,  waterTile);
+		m_TileLayer.addTile(ColorRGBA.BLUE, waterTile);
 		m_TileLayer.setVoidTile(waterTile);
 		
 		tileMap.attachComponent(m_TileLayer);

@@ -62,7 +62,7 @@ public class GameObject {
 	}
 	
 	public void send(String message, GameComponent sender){
-		sendToComponents(message);
+		sendToComponents(message, sender);
 		for(GameObject go : getChildren())
 			go.send(message, sender);
 	}
@@ -142,6 +142,9 @@ public class GameObject {
 		while(i.hasNext()){
 			GameObject go = i.next();
 			if(!go.isAlive()){
+				if(go instanceof Collideable){
+					CollisionManager.removeCollisionBox((Collideable)go);
+				}
 				i.remove();
 			}
 			else go.clearDeadGameObjects();

@@ -1,7 +1,9 @@
 package com.dersgames.dersengine.components;
 
+import java.awt.Rectangle;
+
 import com.dersgames.dersengine.components.Renderable2D.CoordinateSpace;
-import com.dersgames.dersengine.core.Debug;
+import com.dersgames.dersengine.core.CollisionManager;
 import com.dersgames.dersengine.graphics.ColorRGBA;
 
 public class BoundingBox extends GameComponent{
@@ -10,6 +12,8 @@ public class BoundingBox extends GameComponent{
 	public int width, height;
 
 	private static int instanceCount;
+	
+	private Rectangle m_Rectangle;
 	
 	public BoundingBox(float x, float y, int width, int height){
 		this("BoundingBox", x, y, width, height);
@@ -21,6 +25,8 @@ public class BoundingBox extends GameComponent{
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		
+		m_Rectangle = new Rectangle((int)x, (int)y, width, height);
 	}
 	
 	public void addCollisionSprite(){
@@ -29,20 +35,17 @@ public class BoundingBox extends GameComponent{
 		m_GameObject.attachComponent(sprite);
 	}
 	
-	public boolean intersect(BoundingBox box){
-		  if(this.x < box.x + box.width && 
-			this.x + this.width > box.x && 
-			this.y < box.y + box.height && 
-			this.height + this.y > box.y){
+	public boolean intersects(BoundingBox box){
+		if(m_Rectangle.intersects(box.getRectangle()) || m_Rectangle.contains(box.getRectangle()))
 			return true;
-		}
-		  return false;
+		return false;
 	}
 
 	@Override
 	public void update(float dt) {
 		x = m_GameObject.getX();
 		y = m_GameObject.getY();
+		m_Rectangle.setLocation((int) x, (int)y);
 	}
 	
 	public float getX() {
@@ -59,6 +62,16 @@ public class BoundingBox extends GameComponent{
 
 	public int getHeight() {
 		return height;
+	}
+	
+	public Rectangle getRectangle(){
+		return m_Rectangle;
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -4,10 +4,18 @@ import com.dersgames.dersengine.components.GameComponent;
 import com.dersgames.dersengine.core.Debug;
 
 public class Weapon extends GameComponent{
+	
+	private float xOffset, yOffset;
 
 	public Weapon(String tag) {
 		super(tag);
 		
+	}
+	
+	@Override
+	public void init() {
+		xOffset = m_GameObject.getParent().getxOffset();
+		yOffset = m_GameObject.getParent().getyOffset();
 	}
 	
 	private void hit(){
@@ -21,16 +29,16 @@ public class Weapon extends GameComponent{
 			hit();
 			break;
 		case "NorthWeaponOffset":
-			m_GameObject.getParent().setxOffset(20);
+			m_GameObject.getParent().setxOffset(yOffset);
 			break;
 		case "SouthWeaponOffset":
-			m_GameObject.getParent().setxOffset(7);
+			m_GameObject.getParent().setxOffset(xOffset);
 			break;
 		case "EastWeaponOffset":
-			m_GameObject.getParent().setxOffset(20);
+			m_GameObject.getParent().setxOffset(yOffset);
 			break;
 		case "WestWeaponOffset":
-			m_GameObject.getParent().setxOffset(7);
+			m_GameObject.getParent().setxOffset(xOffset);
 			break;
 		}
 	}

@@ -10,6 +10,9 @@ public class PlayerInput extends GameComponent{
 	}
 	
 	@Override
+	public void init() {}
+	
+	@Override
 	public void update(float dt) {
 		if(KeyInput.SPACE){
 			m_GameObject.send("Hit");
@@ -62,11 +65,5 @@ public class PlayerInput extends GameComponent{
 		if(!KeyInput.LEFT && !KeyInput.RIGHT && !KeyInput.DOWN && !KeyInput.UP){
 			m_GameObject.send("Stopped");
 		}
-	}
-
-	@Override
-	public void receive(String message) {
-		
-		
 	}
 }
